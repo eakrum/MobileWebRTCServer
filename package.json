@@ -1,0 +1,18 @@
+{
+  "name": "MobileServer",
+  "version": "0.0.1",
+  "description": "mobile server for react native web rtc app",
+  "main": "app.js",
+  "author": "Senior Deez",
+  "engines": {
+    "node": "v4.1.0"
+  },
+  "scripts": {
+    "start": "LOCAL=TRUE node app.js"
+  },
+  "dependencies": {
+    "express": "^4.11.2",
+    "open": "0.0.5",
+    "socket.io": "1.3.4"
+  }
+}

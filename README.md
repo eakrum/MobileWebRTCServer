@@ -1,9 +1,8 @@
-# react-native-webrtc-server
-The signaling server for https://github.com/oney/react-native-webrtc   
-You can checkout this demo https://github.com/oney/RCTWebRTCDemo  
-Demo server: https://react-native-webrtc.herokuapp.com/
+# Never Miss Class Server
+The signaling server for https://github.com/eawwal/MobileWebRTC  
 
-# Get started
+
+# Start Server
 
 1. `npm install`
-2. `npm start`
+2. `node app.js or npm start`

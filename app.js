@@ -52,14 +52,33 @@ io.on('connection', function(socket){
   socket.on('join', function(name, callback){
     console.log('join', name);
     var socketIds = socketIdsInRoom(name);
-    callback(socketIds);
     socket.join(name);
     socket.room = name;
+    callback(socketIds);
+  });
+  socket.on('leave', function(name, callback){
+    console.log('leave', name);
+    var socketIds = socketIdsInRoom(name);
+    console.log('socketIDs', socketIds);
+    callback(socketIds);
+    socket.leave(name);
   });
 
   socket.on('log', function(message) {
     console.log("MSG:", message);
   });
+
+  socket.on('counter', function(name){
+    console.log('adding a viewer');
+    console.log('room: ', name);
+    var socketIds = socketIdsInRoom(name);
+    viewers = socketIds.length;
+    var room = socket.room;
+    console.log('room', room);
+    io.in(room).emit('viewers', viewers);
+
+  });
+
 
 
   socket.on('exchange', function(data){

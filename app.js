@@ -10,6 +10,8 @@ var serverPort = (process.env.PORT  || 4443);
 var https = require('https');
 var http = require('http');
 var server;
+var viewers;
+var newUser;
 server = https.createServer(options, app);
 
  io = require('socket.io')(server);
@@ -39,9 +41,9 @@ function socketIdsInRoom(name) {
 }
 
 io.on('connection', function(socket){
-  console.log('connection');
+  console.log('new user connected with ID:' , socket.id);
   socket.on('disconnect', function(){
-    console.log('disconnect');
+    console.log('user disconnected with ID: ', socket.id);
     if (socket.room) {
       var room = socket.room;
       io.to(room).emit('leave', socket.id);
@@ -61,6 +63,25 @@ io.on('connection', function(socket){
     console.log("MSG:", message);
   });
 
+  socket.on('counter', function(name){
+    console.log('adding a viewer');
+    console.log('room: ', name);
+    var socketIds = socketIdsInRoom(name);
+    viewers = socketIds.length;
+    var room = socket.room;
+    console.log('room', room);
+    io.in(room).emit('viewers', viewers);
+
+  });
+
+  socket.on('getUser', function(name) {
+    console.log('just got a new user');
+    console.log('the user is in room' , name);
+    var socketIds = socketIdsInRoom(name);
+    newUser = socketIds; 
+
+  });
+
 
   socket.on('exchange', function(data){
     //console.log('exchange', data);
@@ -69,3 +90,4 @@ io.on('connection', function(socket){
     to.emit('exchange', data);
   });
 });
+

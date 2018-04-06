@@ -10,7 +10,10 @@ var serverPort = (process.env.PORT  || 4443);
 var https = require('https');
 var http = require('http');
 var server;
+<<<<<<< HEAD
 var viewers;
+=======
+>>>>>>> fd7e092336c662ff34fae1c46ea641c43ca049d7
 var newUser;
 server = https.createServer(options, app);
 
@@ -41,9 +44,18 @@ function socketIdsInRoom(name) {
 }
 
 io.on('connection', function(socket){
+<<<<<<< HEAD
   console.log('new user connected with ID:' , socket.id);
   socket.on('disconnect', function(){
     console.log('user disconnected with ID: ', socket.id);
+=======
+  console.log('connection with ID', socket.id);
+  newUser = socket.id;
+  console.log('new user variable filled with', newUser);
+  socket.on('disconnect', function(){
+    console.log('disconnect with ID', socket.id);
+    console.log('disconnected with new variable id of:', newUser);
+>>>>>>> fd7e092336c662ff34fae1c46ea641c43ca049d7
     if (socket.room) {
       var room = socket.room;
       io.to(room).emit('leave', socket.id);
@@ -54,9 +66,17 @@ io.on('connection', function(socket){
   socket.on('join', function(name, callback){
     console.log('join', name);
     var socketIds = socketIdsInRoom(name);
-    callback(socketIds);
+    console.log('socket Ids in this room are', socketIds);
     socket.join(name);
     socket.room = name;
+    callback(socketIds);
+  });
+  socket.on('leave', function(name, callback){
+    console.log('leave', name);
+    var socketIds = socketIdsInRoom(name);
+    console.log('socketIDs', socketIds);
+    callback(socketIds);
+    socket.leave(name);
   });
 
   socket.on('log', function(message) {
@@ -74,6 +94,7 @@ io.on('connection', function(socket){
 
   });
 
+<<<<<<< HEAD
   socket.on('getUser', function(name) {
     console.log('just got a new user');
     console.log('the user is in room' , name);
@@ -81,6 +102,8 @@ io.on('connection', function(socket){
     newUser = socketIds; 
 
   });
+=======
+>>>>>>> fd7e092336c662ff34fae1c46ea641c43ca049d7
 
 
   socket.on('exchange', function(data){

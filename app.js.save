@@ -59,7 +59,7 @@ io.on('connection', function(socket){
     socket.room = name;
     callback(socketIds);
   });
-  socket.on('leave', function(name, callback){
+  socket.on('leave', function(name){
     console.log('leave', name);
     var socketId = socket.id;
     console.log('Socked Id: ', socketId);
@@ -67,10 +67,8 @@ io.on('connection', function(socket){
     console.log('SocketIds in this room:', socketIds);
     const room = socket.room;
     console.log('Leaving ROOM: ', room);
-    callback(socketIds);
     io.in(room).emit('Leave: ', socketId);
     socket.leave(room);
-    console.log('leaving complete');
   }); 
 
   socket.on('log', function(message) {
@@ -87,15 +85,6 @@ io.on('connection', function(socket){
     io.in(room).emit('viewers', viewers);
 
   });
-
-   socket.on('sendMessage', function(message){
-    console.log('got a message:' , message);
-    var room = socket.room;
-    console.log('room2: ' , room);
-
-    io.in(room).emit('message', message);
-
-  })
 
   socket.on('getUser', function(name) {
     console.log('just got a new user');

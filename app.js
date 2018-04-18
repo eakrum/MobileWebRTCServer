@@ -71,6 +71,15 @@ io.on('connection', function(socket){
     io.in(room).emit('Leave: ', socketId);
     socket.leave(room);
     console.log('leaving complete');
+  });
+
+  socket.on('leave2', function(){
+    if (socket.room){
+     var room = socket.room;
+     io.to(room).emit('leaveEveryone', socket.id);
+     socket.leave(room);
+     console.log('leavingEveryone complete');
+  }
   }); 
 
   socket.on('log', function(message) {
@@ -96,6 +105,14 @@ io.on('connection', function(socket){
     io.in(room).emit('message', message);
 
   })
+
+  socket.on('matchUser', function(userID){
+    console.log('got user name:' , userID);
+    var room = socket.room;
+    io.in(room).emit('displayUser', userID);
+    
+
+  });
 
   socket.on('getUser', function(name) {
     console.log('just got a new user');

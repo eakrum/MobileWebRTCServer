@@ -1,5 +1,5 @@
-# Never Miss Class Server
-The signaling server for https://github.com/eawwal/MobileWebRTC  
+# StevensLIVE
+The signaling server for https://github.com/eawwal/StevensLIVE  
 
 
 # Start Server
